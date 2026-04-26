@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Nunito';
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofINeaB.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGkyMZhrib2Bg-4.woff2') format('woff2');
+}
+
+@theme {
+  --font-sans: "Nunito", "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-clinic-mint: #6db5b5;
+  --color-clinic-yellow: #f4e082;
+  --color-clinic-blue: #d8e7ed;
+  --color-clinic-cream: #fcfbf4;
+  --color-clinic-text: #4a7c7c;
+  --color-clinic-pink: #f2aebc;
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, #e8eef0 0%, #f5f9fa 20%, #e8eef0 40%, #e8eef0 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2.5s infinite ease-in-out;
+}
+
+@layer base {
+  body {
+    @apply bg-clinic-cream text-clinic-text font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .cloud-mask-bottom {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V80C100,120 200,120 300,80C400,40 500,40 600,80C700,120 800,120 900,80C1000,40 1100,40 1200,80V0H0Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V80C100,120 200,120 300,80C400,40 500,40 600,80C700,120 800,120 900,80C1000,40 1100,40 1200,80V0H0Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  
+  .cloud-mask-top {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,120V40C100,0 200,0 300,40C400,80 500,80 600,40C700,0 800,0 900,40C1000,80 1100,80 1200,40V120H0Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,120V40C100,0 200,0 300,40C400,80 500,80 600,40C700,0 800,0 900,40C1000,80 1100,80 1200,40V120H0Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  .nav-cloud-mask {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath d='M0,0L1440,0L1440,150C1380,130 1320,130 1260,150C1200,170 1140,170 1080,150C1020,130 960,130 900,150C840,170 780,170 720,150C660,130 600,130 540,150C480,170 420,170 360,150C300,130 240,130 180,150C120,170 60,170 0,150L0,0Z' /%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 200'%3E%3Cpath d='M0,0L1440,0L1440,150C1380,130 1320,130 1260,150C1200,170 1140,170 1080,150C1020,130 960,130 900,150C840,170 780,170 720,150C660,130 600,130 540,150C480,170 420,170 360,150C300,130 240,130 180,150C120,170 60,170 0,150L0,0Z' /%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  .hero-cloud-window {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M10,0 C15,5 20,5 25,0 C30,5 35,5 40,0 C45,5 50,5 55,0 C60,5 65,5 70,0 C75,5 80,5 85,0 C90,5 95,5 100,0 V100 C95,95 90,95 85,100 C80,95 75,95 70,100 C65,95 60,95 55,100 C50,95 45,95 40,100 C35,95 30,95 25,100 C20,95 15,95 10,100 C5,95 0,95 0,100 V0 C5,5 10,5 15,0' /%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M10,0 C15,5 20,5 25,0 C30,5 35,5 40,0 C45,5 50,5 55,0 C60,5 65,5 70,0 C75,5 80,5 85,0 C90,5 95,5 100,0 V100 C95,95 90,95 85,100 C80,95 75,95 70,100 C65,95 60,95 55,100 C50,95 45,95 40,100 C35,95 30,95 25,100 C20,95 15,95 10,100 C5,95 0,95 0,100 V0 C5,5 10,5 15,0' /%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  .text-border {
+    -webkit-text-stroke: 1.5px currentColor;
+  }
+
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  /* Skeleton loading states */
+  .skeleton-text {
+    @apply skeleton rounded h-4 w-full;
+  }
+
+  .skeleton-avatar {
+    @apply skeleton rounded-full;
+  }
+}

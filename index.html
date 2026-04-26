@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Font preloads with swap for FOUT prevention -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/nunito/v26/XRXV3I6Li01BKofINeaB.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGkyMZhrib2Bg-4.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Critical image preloads -->
+    <link rel="preload" as="image" href="/tuco logo.webp" />
+    <link rel="preload" as="image" href="/Advertising-Blog-6.jpg" />
+    <title>Tuco Kids | Intelligent Skincare for the Spiderman Generation</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Image loading performance optimization -->
+    <script>
+      // Handle already-cached images on DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', function() {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+          if (img.complete) {
+            img.dispatchEvent(new Event('load'));
+          }
+        });
+      });
+      
+      // Preload critical images
+      const preloadImages = ['/tuco logo.webp', '/header image.webp'];
+      preloadImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'image';
+        link.href = src;
+        document.head.appendChild(link);
+      });
+    </script>
+  </body>
+</html>
+
