@@ -209,69 +209,118 @@ const FeaturedIn = () => (
     </motion.div>
   </section>
 );
-const ProductCard: React.FC<{ product: any }> = ({ product }) => (
-  <motion.div 
-    whileHover={{ y: -12 }}
-    className="bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col border border-clinic-blue/10 h-full relative"
-  >
-    <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-      <div className="bg-clinic-yellow text-clinic-text text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
-        {product.discount}
-      </div>
-      <div className="bg-clinic-mint text-white text-[7px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-md">
-        Buy 5 @ 199 each!
-      </div>
-    </div>
-
-    <div className="m-2 rounded-[32px] overflow-hidden relative bg-clinic-blue/5">
-      <SmartImage 
-        src={product.image} 
-        alt={product.title} 
-        aspectClass="aspect-square"
-        className="group-hover:scale-110 transition-transform duration-[1.5s]" 
-      />
-      <div className="absolute top-4 right-4 z-20">
-        <motion.button 
-          whileTap={{ scale: 0.8 }}
-          className="bg-white/80 backdrop-blur-md p-2 rounded-xl text-clinic-pink hover:bg-clinic-pink hover:text-white transition-colors"
+const ProductCard: React.FC<{ product: any }> = ({ product }) => {
+  const [isAdded, setIsAdded] = React.useState(false);
+  
+  return (
+    <motion.div 
+      whileHover={{ y: -16 }}
+      className="bg-white rounded-[40px] overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer group flex flex-col border border-clinic-blue/10 h-full relative"
+    >
+      {/* Discount & Urgency Badges */}
+      <div className="absolute top-16 left-16 z-20 flex flex-col gap-8">
+        <motion.div 
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          className="bg-clinic-yellow text-clinic-text text-[8px] font-black px-12 py-8 rounded-full uppercase tracking-widest shadow-md"
         >
-          <Heart size={16} fill="currentColor" strokeWidth={0} />
-        </motion.button>
-      </div>
-    </div>
-
-    <div className="p-5 flex-1 flex flex-col">
-      <div className="flex items-center gap-1 mb-2">
-        <div className="flex text-clinic-yellow">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={10} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
-          ))}
-        </div>
-        <span className="text-[9px] font-bold text-clinic-text/40">({product.reviews})</span>
+          {product.discount}
+        </motion.div>
+        <motion.div 
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          transition={{ delay: 0.1 }}
+          className="bg-clinic-pink text-white text-[7px] font-black px-12 py-8 rounded-full uppercase tracking-widest shadow-md"
+        >
+          🔥 Only 3 left
+        </motion.div>
       </div>
 
-      <h3 className="text-xs font-black text-clinic-text mb-1 line-clamp-2 uppercase tracking-wide">
-        {product.title}
-      </h3>
-      <p className="text-[10px] font-medium text-clinic-text/60 italic mb-4 line-clamp-1">
-        {product.tagline}
-      </p>
-
-      <div className="mt-auto flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <span className="text-base font-black text-clinic-mint">{product.price}</span>
-          {product.originalPrice && (
-            <span className="text-[10px] font-bold text-clinic-text/30 line-through">{product.originalPrice}</span>
-          )}
-        </div>
+      {/* Image Container with Overlay */}
+      <div className="m-16 rounded-[32px] overflow-hidden relative bg-clinic-blue/5">
+        <SmartImage 
+          src={product.image} 
+          alt={product.title} 
+          aspectClass="aspect-square"
+          className="group-hover:scale-110 transition-transform duration-[1.5s]" 
+        />
         
-        <button className="w-full bg-clinic-mint text-white py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-clinic-mint/20 hover:bg-clinic-text transition-colors">
-          Add to Cart
-        </button>
+        {/* Wishlist Button - Always Visible */}
+        <div className="absolute top-16 right-16 z-20">
+          <motion.button 
+            whileTap={{ scale: 0.8 }}
+            className="bg-white/90 backdrop-blur-md p-8 rounded-xl text-clinic-pink hover:bg-clinic-pink hover:text-white transition-colors shadow-lg"
+            aria-label="Add to wishlist"
+          >
+            <Heart size={20} fill="currentColor" strokeWidth={0} />
+          </motion.button>
+        </div>
+
+        {/* Quick Add Overlay - Appears on Hover */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="absolute inset-0 bg-black/40 flex items-center justify-center z-10"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              setIsAdded(true);
+              setTimeout(() => setIsAdded(false), 2000);
+            }}
+            className="bg-clinic-yellow text-clinic-text px-24 py-12 rounded-full font-black uppercase tracking-widest text-sm shadow-xl hover:bg-clinic-mint hover:text-white transition-all"
+          >
+            {isAdded ? '✓ Added!' : 'Quick Add'}
+          </motion.button>
+        </motion.div>
       </div>
-    </div>
-  </motion.div>
-);
+
+      {/* Content Section */}
+      <div className="p-20 flex-1 flex flex-col">
+        {/* Rating */}
+        <div className="flex items-center gap-8 mb-16">
+          <div className="flex text-clinic-yellow">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={12} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
+            ))}
+          </div>
+          <span className="text-[9px] font-bold text-clinic-text/40">({product.reviews})</span>
+        </div>
+
+        {/* Title */}
+        <h3 className="text-xs font-black text-clinic-text mb-8 line-clamp-2 uppercase tracking-wide leading-tight">
+          {product.title}
+        </h3>
+        
+        {/* Tagline */}
+        <p className="text-[10px] font-medium text-clinic-text/60 italic mb-16 line-clamp-1">
+          {product.tagline}
+        </p>
+
+        {/* Price & CTA */}
+        <div className="mt-auto flex flex-col gap-16">
+          <div className="flex items-center gap-8">
+            <span className="text-lg font-black text-clinic-mint">{product.price}</span>
+            {product.originalPrice && (
+              <span className="text-[10px] font-bold text-clinic-text/30 line-through">{product.originalPrice}</span>
+            )}
+          </div>
+          
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full bg-clinic-mint text-white py-12 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-clinic-mint/20 hover:bg-clinic-text transition-all"
+            aria-label={`Add ${product.title} to cart`}
+          >
+            Add to Cart
+          </motion.button>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 
 const CloudTop = ({ color = "white", opacity = 0.95, className }: { color?: string, opacity?: number, className?: string }) => (
@@ -371,16 +420,27 @@ export default function App() {
             </div>
 
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="hidden md:flex items-center gap-1.5 text-clinic-text/40 hover:text-clinic-mint cursor-pointer transition-colors">
+              <button 
+                className="hidden md:flex items-center gap-1.5 text-clinic-text/40 hover:text-clinic-mint cursor-pointer transition-colors"
+                aria-label="Search products"
+              >
                 <Search size={18} strokeWidth={2.5} />
                 <span className="text-[10px] font-black uppercase tracking-widest">Search</span>
-              </div>
+              </button>
               <div className="flex items-center gap-3">
-                <User size={20} className="text-clinic-mint cursor-pointer hover:scale-110 transition-transform hidden sm:block" />
-                <div className="relative group cursor-pointer">
+                <button 
+                  className="text-clinic-mint cursor-pointer hover:scale-110 transition-transform hidden sm:block"
+                  aria-label="View account"
+                >
+                  <User size={20} />
+                </button>
+                <button 
+                  className="relative group cursor-pointer"
+                  aria-label="View shopping cart"
+                >
                   <ShoppingBag size={20} className="text-clinic-mint group-hover:scale-110 transition-transform" />
-                  <span className="absolute -top-1.5 -right-1.5 bg-clinic-pink text-white text-[8px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">0</span>
-                </div>
+                  <span className="absolute -top-1.5 -right-1.5 bg-clinic-pink text-white text-[8px] font-black w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm" aria-label="0 items in cart">0</span>
+                </button>
                 <button 
                   className="lg:hidden text-clinic-mint p-1 flex items-center justify-center"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -393,17 +453,13 @@ export default function App() {
 
           {/* Bottom Row: Product Categories (Cloud Island style) */}
           <div className="hidden lg:flex justify-center">
-            <div className={`bg-clinic-blue/5 border border-white/40 shadow-sm rounded-full px-8 py-2 flex items-center gap-8 transition-all duration-500 ${isScrolled ? 'scale-90 opacity-90' : 'scale-100'}`}>
+            <div className={`bg-clinic-blue/5 border border-white/40 shadow-sm rounded-full px-32 py-16 flex items-center gap-32 transition-all duration-500 ${isScrolled ? 'scale-90 opacity-90' : 'scale-100'}`}>
               <NavItem label="Haircare" />
-              <NavItem label="Skin Cleansing" />
               <NavItem label="Skincare" />
               <NavItem label="Suncare" />
-              <NavItem label="Face Care" />
               <NavItem label="Makeup" />
-              <NavItem label="Farah's Picks" />
               <NavItem label="Gifting" />
-              <NavItem label="Travel Kits" />
-              <NavItem label="Regimens" />
+              <NavItem label="More" />
             </div>
           </div>
         </div>
@@ -573,9 +629,9 @@ export default function App() {
         </section>
 
         {/* Trust Bar (Law of Social Proof) */}
-        <section className="bg-clinic-cream py-10 md:py-16 border-y border-clinic-blue/10 relative z-20">
-          <div className="max-w-[95%] mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-4">
+        <section className="bg-clinic-cream py-32 md:py-48 border-y-8 border-clinic-blue/10 relative z-20">
+          <div className="max-w-7xl mx-auto px-16 md:px-24">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-32 md:gap-48 lg:gap-32">
               {[
                 { icon: ShieldCheck, label: "Toxin Free", desc: "100% Safe" },
                 { icon: Leaf, label: "Plant Powered", desc: "Native Actives" },
@@ -585,18 +641,18 @@ export default function App() {
               ].map((item, i) => (
                 <motion.div 
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 32 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex flex-col md:flex-row items-center text-center md:text-left gap-4 group"
+                  transition={{ delay: i * 0.12 }}
+                  className="flex flex-col md:flex-row items-center text-center md:text-left gap-16 group"
                 >
-                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-white shadow-md flex items-center justify-center text-clinic-mint group-hover:rotate-6 group-hover:scale-110 transition-all duration-300">
-                    <item.icon size={28} />
+                  <div className="w-64 h-64 md:w-80 md:h-80 rounded-32 bg-white shadow-lg flex items-center justify-center text-clinic-mint group-hover:rotate-6 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                    <item.icon size={48} strokeWidth={1.5} />
                   </div>
-                  <div className="flex flex-col">
-                    <p className="text-[9px] md:text-xs font-black uppercase tracking-widest text-clinic-text mb-0.5">{item.label}</p>
-                    <p className="text-[8px] md:text-[10px] font-bold text-clinic-text/40 uppercase tracking-tighter">{item.desc}</p>
+                  <div className="flex flex-col gap-8">
+                    <p className="text-xs md:text-sm font-black uppercase tracking-widest text-clinic-text">{item.label}</p>
+                    <p className="text-[10px] md:text-xs font-bold text-clinic-text/50 uppercase tracking-tight">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -605,30 +661,58 @@ export default function App() {
         </section>
 
         {/* Our Products / Best Sellers Carousel */}
-        <section className="bg-white py-24 px-4 relative overflow-hidden">
+        <section className="bg-white py-96 px-16 md:px-24 relative overflow-hidden">
            <CloudTop color="white" opacity={1} />
-           <div className="max-w-[95%] mx-auto relative z-20 pt-20">
-              <div className="flex justify-between items-end mb-16">
-                 <div className="flex flex-col gap-4">
+           <div className="max-w-7xl mx-auto relative z-20 pt-80">
+              <motion.div 
+                initial={{ opacity: 0, y: 64 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="flex justify-between items-end mb-64"
+              >
+                 <div className="flex flex-col gap-16">
                     <h2 className="text-4xl md:text-6xl font-black text-clinic-mint tracking-tighter uppercase leading-none">Our Products</h2>
-                    <div className="flex gap-2">
-                       <div className="w-12 h-2 bg-clinic-yellow rounded-full"></div>
-                       <div className="w-24 h-2 bg-clinic-mint rounded-full"></div>
+                    <div className="flex gap-16">
+                       <div className="w-24 h-8 bg-clinic-yellow rounded-full"></div>
+                       <div className="w-48 h-8 bg-clinic-mint rounded-full"></div>
                     </div>
                  </div>
                  <motion.button 
-                    whileHover={{ x: 10 }}
-                    className="hidden md:flex items-center gap-2 text-clinic-text font-black uppercase tracking-widest text-xs border-b-2 border-clinic-yellow pb-2"
+                    whileHover={{ x: 16 }}
+                    className="hidden md:flex items-center gap-16 text-clinic-text font-black uppercase tracking-widest text-xs border-b-8 border-clinic-yellow pb-8"
                  >
                     View All Products <ChevronRight size={16} />
                  </motion.button>
-              </div>
+              </motion.div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
+              <motion.div 
+                className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-32 md:gap-48"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: {
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.08,
+                    },
+                  },
+                }}
+              >
                  {BEST_SELLERS.slice(0, 12).map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <motion.div
+                      key={product.id}
+                      variants={{
+                        hidden: { opacity: 0, y: 64 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+                      }}
+                    >
+                      <ProductCard product={product} />
+                    </motion.div>
                  ))}
-              </div>
+              </motion.div>
 
               <div className="mt-16 text-center flex md:hidden">
                  <button className="bg-clinic-mint text-white px-10 py-4 rounded-full font-black uppercase tracking-widest text-xs shadow-xl mx-auto">
