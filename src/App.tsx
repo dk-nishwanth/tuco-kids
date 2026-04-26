@@ -45,6 +45,9 @@ import {
 } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { BEST_SELLERS, POPULAR_KITS, BLOG_POSTS } from './data';
+import tucoLogo from './assets/images/tuco logo.webp';
+import heroBg from './assets/images/Advertising-Blog-6.jpg';
+import doodles from './assets/images/child_drawing_doodles_1777101032980.png';
 
 const colors = {
   mint: '#3d8e8e',
@@ -57,7 +60,7 @@ const colors = {
 
 const FrogLogo = () => (
   <img 
-    src="/tuco logo.webp" 
+    src={tucoLogo} 
     alt="Tuco Kids Logo" 
     className="w-full h-full object-contain"
     loading="eager"
@@ -67,7 +70,7 @@ const FrogLogo = () => (
 
 const DecorativeDoodles = ({ className }: { className?: string }) => (
   <img 
-    src="/child_drawing_doodles_1777101032980.png" 
+    src={doodles} 
     alt="Decorative Doodles" 
     className={`opacity-40 pointer-events-none ${className}`}
     loading="lazy"
@@ -479,7 +482,7 @@ export default function App() {
                 {/* Background image */}
                 <div className="absolute inset-0 z-0">
                   <img 
-                    src="/Advertising-Blog-6.jpg" 
+                    src={heroBg} 
                     alt="Tuco Kids - Safe & Effective Skincare for Kids" 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3s]"
                     loading="eager"
